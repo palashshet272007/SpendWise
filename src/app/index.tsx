@@ -1,98 +1,90 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Text, Button } from 'react-native-paper';
+import { router } from 'expo-router';
 
 export default function HomeScreen() {
   return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+    <View style={styles.container}>
+      <View style={styles.logo}>
+        <Text style={styles.logoText}>₹</Text>
+      </View>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+      <Text style={styles.title}>SpendWise</Text>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+      <Text style={styles.subtitle}>
+        Manage your money wisely
+      </Text>
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+      <Text style={styles.description}>
+        Track your income, control your expenses
+        and build better financial habits.
+      </Text>
+
+      <Button
+      onPress={() => router.replace('/login')}
+      >
+        Get Started
+      </Button>
+
+      <Text style={styles.footer}>
+        Track your expenses. Save smarter.
+      </Text>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
     alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+    padding: 25,
   },
-  heroSection: {
-    alignItems: 'center',
+  logo: {
+    width: 100,
+    height: 100,
+    borderRadius: 25,
+    backgroundColor: '#E4F5EC',
     justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+    alignItems: 'center',
+  },
+  logoText: {
+    fontSize: 55,
+    fontWeight: 'bold',
+    color: '#0F8B5F',
   },
   title: {
+    fontSize: 35,
+    fontWeight: 'bold',
+    color: '#0F8B5F',
+    marginTop: 20,
+  },
+  subtitle: {
+    fontSize: 18,
+    color: '#333333',
+    marginTop: 10,
+  },
+  description: {
+    fontSize: 15,
+    color: '#777777',
     textAlign: 'center',
+    marginTop: 20,
+    lineHeight: 24,
   },
-  code: {
-    textTransform: 'uppercase',
+  button: {
+    width: '100%',
+    borderRadius: 10,
+    marginTop: 40,
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  buttonContent: {
+    height: 50,
+  },
+  footer: {
+    color: '#888888',
+    marginTop: 35,
+    fontSize: 13,
   },
 });
